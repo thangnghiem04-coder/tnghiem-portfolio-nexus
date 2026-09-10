@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowDownRight, ArrowUpRight, BookOpen, Facebook, Mail, Menu, Phone, X } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, BookOpen, ChevronDown, Facebook, Mail, Menu, Phone, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/timothy-portfolio-hero.jpg";
+import contactBanner from "@/assets/contact-financial-banner.jpg";
 
 const workUrl = "https://drive.google.com/drive/folders/1YH5NBk6iQbgFOnCuQ5Le84UC7RR0V1jy?usp=drive_link";
 const transcriptUrl = "https://drive.google.com/file/d/1vUTw9c2nO8ngR5mvj21gUYWJh39UAZvu/view?usp=drive_link";
@@ -30,27 +31,30 @@ const capabilities = [
 ];
 
 const places = [
-  { name: "France", x: 48, y: 39 }, { name: "Denmark", x: 51, y: 29 },
-  { name: "Germany", x: 52, y: 36 }, { name: "Finland", x: 57, y: 23 },
-  { name: "Qatar", x: 64, y: 49 }, { name: "UAE", x: 67, y: 50 }, { name: "China", x: 80, y: 42 },
+  { name: "France", x: 48, y: 39, residence: false }, { name: "Denmark", x: 51, y: 29, residence: false },
+  { name: "Germany", x: 52, y: 36, residence: false }, { name: "Finland", x: 57, y: 23, residence: true },
+  { name: "Qatar", x: 64, y: 49, residence: false }, { name: "UAE", x: 67, y: 50, residence: false }, { name: "China", x: 80, y: 42, residence: false },
 ];
 
 function WorldMap() {
   const [active, setActive] = useState("Finland");
   return <div className="glass-panel relative overflow-hidden p-4 md:p-8">
-    <div className="absolute left-6 top-5 z-10 text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">Global field of view</div>
+    <div className="flex flex-wrap items-center justify-between gap-3 px-2">
+      <div className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">Global field of view</div>
+      <div className="flex gap-4 text-[10px] uppercase tracking-[0.12em] text-muted-foreground" aria-label="Map legend"><span className="flex items-center gap-1.5"><i className="h-2 w-2 bg-map-visited"/>Visited</span><span className="flex items-center gap-1.5"><i className="h-2 w-2 bg-map-residence"/>Residence</span></div>
+    </div>
     <svg viewBox="0 0 1000 520" className="mt-8 h-auto w-full" role="img" aria-label="World map highlighting seven countries traversed and analyzed">
-      <g fill="currentColor" className="text-primary/12" stroke="currentColor" strokeWidth="1.2">
+      <g fill="currentColor" className="text-map-neutral" stroke="currentColor" strokeWidth="1.2">
         <path d="M75 115l70-45 112 18 50 54-28 45-55 3-27 58-74-11-43-52zM230 250l46 22 31 79-20 102-41-29-20-91-28-39z" />
         <path d="M430 104l60-40 85 20 40 43 83-20 104 20 109 82-30 83-74 20-57-36-47 32-72-36-48-83-55 1-22-35-64-9zM524 245l69 29 54 94-31 100-91-9-48-88z" />
         <path d="M786 394l76-21 62 43-30 55-86-7z" />
       </g>
-      {places.map((place) => <g key={place.name} className="cursor-pointer" tabIndex={0} role="button" aria-label={place.name} onMouseEnter={() => setActive(place.name)} onFocus={() => setActive(place.name)} onClick={() => setActive(place.name)}>
-        <circle cx={place.x * 10} cy={place.y * 10} r="14" className="marker-pulse fill-accent" />
-        <circle cx={place.x * 10} cy={place.y * 10} r="5" className="fill-accent stroke-background" strokeWidth="3" />
+      {places.map((place) => <g key={place.name} className={`cursor-pointer outline-none ${place.residence ? "text-map-residence" : "text-map-visited"}`} tabIndex={0} role="button" aria-label={`${place.name}${place.residence ? ", current residence" : ", visited"}`} onMouseEnter={() => setActive(place.name)} onFocus={() => setActive(place.name)} onClick={() => setActive(place.name)}>
+        <circle cx={place.x * 10} cy={place.y * 10} r="18" className="marker-pulse fill-current" />
+        <path d={`M${place.x * 10 - 8} ${place.y * 10 - 7}l10-4 8 7-3 11-10 3-8-7z`} className="fill-current stroke-background" strokeWidth="3" />
       </g>)}
     </svg>
-    <div className="absolute bottom-5 right-6 font-display text-2xl italic text-primary">{active}</div>
+    <div className={`absolute bottom-5 right-6 font-display text-2xl italic ${active === "Finland" ? "text-map-residence" : "text-map-visited"}`}>{active}</div>
   </div>;
 }
 
@@ -62,8 +66,33 @@ function CapabilityIcon({ index }: { index: number }) {
   return <svg viewBox="0 0 56 56" aria-hidden="true"><path d="M11 8h25l8 8v20M36 8v9h8M17 20h13M17 27h11" fill="none" stroke="currentColor" strokeWidth="1.5"/><circle cx="34" cy="36" r="9" fill="none" stroke="currentColor" strokeWidth="1.5"/><path d="M41 43l7 7" stroke="currentColor" strokeWidth="1.5"/></svg>;
 }
 
+function AnalyticalGraphic({ index }: { index: number }) {
+  const shared = "fill-none stroke-current [stroke-linecap:round] [stroke-linejoin:round]";
+  if (index === 0) return <svg viewBox="0 0 260 120" aria-label="Regression scatter plot and correlation matrix"><g className={`${shared} text-primary/35`} strokeWidth="1"><path d="M14 12v82h112M146 12v82h100"/><path d="M151 20h84M151 42h84M151 64h84M151 86h84M159 14v78M181 14v78M203 14v78M225 14v78"/></g><path d="M22 82L116 25" className={`${shared} text-map-visited`} strokeWidth="2"/><g className="fill-accent"><circle cx="29" cy="79" r="3"/><circle cx="43" cy="68" r="3"/><circle cx="58" cy="70" r="3"/><circle cx="72" cy="49" r="3"/><circle cx="88" cy="45" r="3"/><circle cx="106" cy="31" r="3"/></g><g className="fill-map-visited"><rect x="160" y="21" width="18" height="18"/><rect x="182" y="43" width="18" height="18" opacity=".7"/><rect x="204" y="65" width="18" height="18" opacity=".45"/><rect x="226" y="21" width="8" height="18" opacity=".25"/></g></svg>;
+  if (index === 1) return <svg viewBox="0 0 260 120" aria-label="IS-LM and aggregate supply-demand equilibrium"><g className={`${shared} text-primary/35`} strokeWidth="1"><path d="M14 10v88h108M142 10v88h104"/></g><path d="M24 23c37 12 60 37 90 68M24 91c35-8 60-31 91-70" className={`${shared} text-map-visited`} strokeWidth="2"/><path d="M151 88c32-10 55-36 86-68M151 22c29 15 53 39 87 67" className={`${shared} text-accent`} strokeWidth="2"/><g className="fill-map-residence"><circle cx="69" cy="58" r="4"/><circle cx="194" cy="57" r="4"/></g></svg>;
+  if (index === 2) return <svg viewBox="0 0 260 120" aria-label="Institutional timeline and governance matrix"><path d="M16 35h224" className={`${shared} text-primary/35`} strokeWidth="1"/><g className="fill-map-visited"><circle cx="30" cy="35" r="5"/><circle cx="84" cy="35" r="5"/><circle cx="138" cy="35" r="5"/><circle cx="192" cy="35" r="5"/><circle cx="238" cy="35" r="5"/></g><g className={`${shared} text-accent`} strokeWidth="1.5"><path d="M30 35v-15h54v15M138 35v-15h54v15"/><rect x="55" y="65" width="42" height="30"/><rect x="100" y="65" width="42" height="30"/><rect x="145" y="65" width="42" height="30"/><rect x="190" y="65" width="42" height="30"/></g></svg>;
+  if (index === 3) return <svg viewBox="0 0 260 120" aria-label="Tactical maneuver and operational depth distribution"><g className={`${shared} text-primary/25`} strokeWidth="1"><path d="M20 18h220M20 43h220M20 68h220M20 93h220"/></g><path d="M24 91c30-4 40-23 64-28s39-1 61-22 47-18 84-23" className={`${shared} text-map-visited`} strokeWidth="3"/><path d="M24 91l23-2-8-14M149 41l-4 18 18-4M233 18l-18-3 7 17" className={`${shared} text-map-visited`} strokeWidth="2"/><g className="fill-accent"><rect x="60" y="24" width="18" height="12"/><rect x="112" y="75" width="18" height="12"/><rect x="181" y="43" width="18" height="12"/></g></svg>;
+  return <svg viewBox="0 0 260 120" aria-label="Process tracing flowchart and audit risk matrix"><g className={`${shared} text-primary/35`} strokeWidth="1.5"><rect x="12" y="20" width="42" height="24"/><rect x="74" y="20" width="42" height="24"/><rect x="136" y="20" width="42" height="24"/><path d="M54 32h20M116 32h20"/></g><g className={`${shared} text-accent`} strokeWidth="1.5"><rect x="183" y="57" width="60" height="45"/><path d="M203 57v45M223 57v45M183 72h60M183 87h60"/></g><path d="M24 72h130M24 72l14-9M24 72l14 9" className={`${shared} text-map-visited`} strokeWidth="2"/><rect x="224" y="58" width="18" height="13" className="fill-map-residence"/></svg>;
+}
+
+function CapabilityCard({ item, index, expanded, onToggle, onEnter, onLeave }: { item: string[]; index: number; expanded: boolean; onToggle: () => void; onEnter: () => void; onLeave: () => void }) {
+  const [num, title, description] = item;
+  return <article className="group border-b border-r border-border bg-background/35 transition-colors hover:bg-card focus-within:bg-card" onMouseEnter={onEnter} onMouseLeave={onLeave}>
+    <Button type="button" variant="ghost" onClick={onToggle} onFocus={onEnter} aria-expanded={expanded} aria-controls={`capability-panel-${index}`} className="h-auto min-h-[250px] w-full items-stretch justify-start rounded-none p-7 text-left text-foreground hover:bg-transparent hover:text-foreground md:p-9">
+      <span className="flex w-full flex-col whitespace-normal">
+        <span className="flex items-start justify-between"><span className="text-xs text-muted-foreground">{num}</span><span className="h-14 w-14 text-accent"><CapabilityIcon index={index}/></span></span>
+        <span className="mt-12 flex items-end justify-between gap-6"><span className="max-w-sm font-display text-3xl font-normal leading-tight">{title}</span><ChevronDown className={`mb-1 h-5 w-5 shrink-0 transition-transform duration-300 ${expanded ? "rotate-180" : ""}`}/></span>
+      </span>
+    </Button>
+    <div id={`capability-panel-${index}`} className={`grid transition-[grid-template-rows,opacity] duration-500 ease-out ${expanded ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
+      <div className="overflow-hidden"><div className="grid gap-6 border-t border-border px-7 pb-8 pt-6 md:grid-cols-[.8fr_1.2fr] md:px-9"><p className="text-sm leading-7 text-muted-foreground">{description}</p><div className="min-h-28 text-foreground"><AnalyticalGraphic index={index}/></div></div></div>
+    </div>
+  </article>;
+}
+
 function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeCapability, setActiveCapability] = useState<number | null>(null);
   return (
     <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
       <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/85 backdrop-blur-xl">
@@ -113,8 +142,8 @@ function Index() {
         </section>
 
         <section id="capabilities" className="mx-auto max-w-[1440px] scroll-mt-20 px-5 py-24 md:px-10 md:py-36">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">03 / Capabilities</p><h2 className="mt-5 font-display text-5xl md:text-7xl">Core methodology</h2>
-          <div className="mt-16 grid border-l border-t border-border md:grid-cols-2 lg:grid-cols-3">{capabilities.map(([num,title,description], i) => <article key={title} className={`min-h-[330px] border-b border-r border-border p-7 md:p-9 ${i === 4 ? "lg:col-span-2" : ""}`}><div className="flex items-start justify-between"><span className="text-xs text-muted-foreground">{num}</span><div className="h-14 w-14 text-accent"><CapabilityIcon index={i}/></div></div><h3 className="mt-14 max-w-sm font-display text-3xl leading-tight">{title}</h3><p className="mt-5 max-w-xl text-sm leading-7 text-muted-foreground">{description}</p></article>)}</div>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">03 / Capabilities</p><h2 className="mt-5 font-display text-5xl uppercase md:text-7xl">Core Capabilities</h2>
+          <div className="mt-16 grid border-l border-t border-border md:grid-cols-2">{capabilities.map((item, i) => <CapabilityCard key={item[1]} item={item} index={i} expanded={activeCapability === i} onToggle={() => setActiveCapability(activeCapability === i && window.matchMedia("(hover: none)").matches ? null : i)} onEnter={() => setActiveCapability(i)} onLeave={() => setActiveCapability((current) => current === i ? null : current)}/>)}</div>
         </section>
 
         <section id="work" className="section-rule scroll-mt-20">
@@ -132,6 +161,7 @@ function Index() {
       </main>
 
       <footer id="contact" className="scroll-mt-20 bg-primary text-primary-foreground">
+        <div className="relative h-56 overflow-hidden border-b border-primary-foreground/20 md:h-80"><img src={contactBanner} alt="Abstract financial curves crossing an architectural grid" width={1920} height={768} loading="lazy" className="h-full w-full object-cover"/><div className="absolute inset-0 bg-primary/20"/></div>
         <div className="mx-auto max-w-[1440px] px-5 pb-10 pt-20 md:px-10 md:pt-28"><p className="text-xs uppercase tracking-[0.18em] text-primary-foreground/50">06 / Contact</p><div className="mt-7 grid gap-12 lg:grid-cols-[1.5fr_1fr]"><h2 className="font-display text-6xl leading-none md:text-8xl">Let’s discuss the systems behind the numbers.</h2><div className="space-y-4 lg:pt-4"><a href="mailto:thangnghiem04@gmail.com" className="flex items-center gap-3 border-b border-primary-foreground/20 pb-4 text-sm hover:text-secondary"><Mail className="h-4 w-4"/>thangnghiem04@gmail.com</a><a href="tel:+358466128746" className="flex items-center gap-3 border-b border-primary-foreground/20 pb-4 text-sm hover:text-secondary"><Phone className="h-4 w-4"/>+358 466 128 746</a><a href="https://www.facebook.com/thang.nghiem.00/" target="_blank" rel="noreferrer" className="flex items-center gap-3 border-b border-primary-foreground/20 pb-4 text-sm hover:text-secondary"><Facebook className="h-4 w-4"/>Facebook <ArrowUpRight className="ml-auto h-4 w-4"/></a><a href={workUrl} target="_blank" rel="noreferrer" className="flex items-center gap-3 border-b border-primary-foreground/20 pb-4 text-sm hover:text-secondary">Portfolio folder <ArrowUpRight className="ml-auto h-4 w-4"/></a><a href={transcriptUrl} target="_blank" rel="noreferrer" className="flex items-center gap-3 border-b border-primary-foreground/20 pb-4 text-sm hover:text-secondary">Academic transcript <ArrowUpRight className="ml-auto h-4 w-4"/></a></div></div><div className="mt-24 flex flex-col justify-between gap-4 border-t border-primary-foreground/20 pt-7 text-xs text-primary-foreground/45 sm:flex-row"><span>© Timothy (Thang) Nghiem. All rights reserved.</span><span>Based in Finland · Working globally</span></div></div>
       </footer>
     </div>
