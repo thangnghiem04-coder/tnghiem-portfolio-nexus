@@ -1,7 +1,7 @@
 # Timothy Nghiem Portfolio
 
 ## Goal
-Build a polished, single-page personal portfolio for Timothy (Thang) Nghiem that presents academic rigor, analytical capabilities, international perspective, and selected work for elite Finance, Audit, and Economics roles.
+Build a polished, single-page personal website portfolio for Timothy (Thang) Nghiem that presents academic rigor, analytical capabilities, international perspective, and selected work for elite Finance, Audit, and Economics roles. Keep the experience unmistakably personal, with Timothy’s name, perspective, credentials, and work as the central focus rather than presenting it like a company or software product.
 
 ## Experience
 - Create a fixed, understated header with the T. NGHIEM wordmark and smooth in-page navigation.
