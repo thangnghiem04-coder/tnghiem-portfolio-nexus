@@ -4,15 +4,19 @@ import { ArrowDownRight, ArrowUpRight, BookOpen, ChevronDown, Facebook, Mail, Me
 import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/timothy-portfolio-hero.jpg";
 import contactBanner from "@/assets/contact-financial-banner.jpg";
+import travelMapAsset from "@/assets/timothy-travel-map.png.asset.json";
+import aaltoLogoAsset from "@/assets/aalto-university-logo.png.asset.json";
+import tampereLogoAsset from "@/assets/tampere-university-logo.png.asset.json";
 
 const workUrl = "https://drive.google.com/drive/folders/1YH5NBk6iQbgFOnCuQ5Le84UC7RR0V1jy?usp=drive_link";
 const transcriptUrl = "https://drive.google.com/file/d/1vUTw9c2nO8ngR5mvj21gUYWJh39UAZvu/view?usp=drive_link";
+const thesisUrl = "https://drive.google.com/file/d/1zg4gA3IqadKLh6plM5GcGYvfG8oN8_J_/view?usp=sharing";
 
 export const Route = createFileRoute("/")({
   head: () => ({ meta: [
-    { title: "Timothy Nghiem — Finance, Audit & Economics" },
+    { title: "Timothy Nghiem — Finance, Governance & Economics" },
     { name: "description", content: "Portfolio of Timothy (Thang) Nghiem — economics, finance, strategic governance, and quantitative analysis." },
-    { property: "og:title", content: "Timothy Nghiem — Finance, Audit & Economics" },
+    { property: "og:title", content: "Timothy Nghiem — Finance, Governance & Economics" },
     { property: "og:description", content: "Academic rigor and analytical work across capital, policy, and governance." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },
@@ -29,34 +33,6 @@ const capabilities = [
   ["04", "Strategic & Military Doctrine", "Abstracted strategic planning, deep operations theory, structural maneuver frameworks, and risk distribution under high uncertainty."],
   ["05", "Research & Analytical Auditing", "Qualitative process-tracing, empirical data auditing, compliance mapping, and large-scale project risk assessment."],
 ];
-
-const places = [
-  { name: "France", x: 48, y: 39, residence: false }, { name: "Denmark", x: 51, y: 29, residence: false },
-  { name: "Germany", x: 52, y: 36, residence: false }, { name: "Finland", x: 57, y: 23, residence: true },
-  { name: "Qatar", x: 64, y: 49, residence: false }, { name: "UAE", x: 67, y: 50, residence: false }, { name: "China", x: 80, y: 42, residence: false },
-];
-
-function WorldMap() {
-  const [active, setActive] = useState("Finland");
-  return <div className="glass-panel relative overflow-hidden p-4 md:p-8">
-    <div className="flex flex-wrap items-center justify-between gap-3 px-2">
-      <div className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">Global field of view</div>
-      <div className="flex gap-4 text-[10px] uppercase tracking-[0.12em] text-muted-foreground" aria-label="Map legend"><span className="flex items-center gap-1.5"><i className="h-2 w-2 bg-map-visited"/>Visited</span><span className="flex items-center gap-1.5"><i className="h-2 w-2 bg-map-residence"/>Residence</span></div>
-    </div>
-    <svg viewBox="0 0 1000 520" className="mt-8 h-auto w-full" role="img" aria-label="World map highlighting seven countries traversed and analyzed">
-      <g fill="currentColor" className="text-map-neutral" stroke="currentColor" strokeWidth="1.2">
-        <path d="M75 115l70-45 112 18 50 54-28 45-55 3-27 58-74-11-43-52zM230 250l46 22 31 79-20 102-41-29-20-91-28-39z" />
-        <path d="M430 104l60-40 85 20 40 43 83-20 104 20 109 82-30 83-74 20-57-36-47 32-72-36-48-83-55 1-22-35-64-9zM524 245l69 29 54 94-31 100-91-9-48-88z" />
-        <path d="M786 394l76-21 62 43-30 55-86-7z" />
-      </g>
-      {places.map((place) => <g key={place.name} className={`cursor-pointer outline-none ${place.residence ? "text-map-residence" : "text-map-visited"}`} tabIndex={0} role="button" aria-label={`${place.name}${place.residence ? ", current residence" : ", visited"}`} onMouseEnter={() => setActive(place.name)} onFocus={() => setActive(place.name)} onClick={() => setActive(place.name)}>
-        <circle cx={place.x * 10} cy={place.y * 10} r="18" className="marker-pulse fill-current" />
-        <path d={`M${place.x * 10 - 8} ${place.y * 10 - 7}l10-4 8 7-3 11-10 3-8-7z`} className="fill-current stroke-background" strokeWidth="3" />
-      </g>)}
-    </svg>
-    <div className={`absolute bottom-5 right-6 font-display text-2xl italic ${active === "Finland" ? "text-map-residence" : "text-map-visited"}`}>{active}</div>
-  </div>;
-}
 
 function CapabilityIcon({ index }: { index: number }) {
   if (index === 0) return <svg viewBox="0 0 56 56" aria-hidden="true"><path d="M8 45V12M8 45h40M14 37l8-11 8 5 12-17" fill="none" stroke="currentColor" strokeWidth="1.5"/><circle cx="22" cy="26" r="2"/><circle cx="30" cy="31" r="2"/></svg>;
@@ -80,7 +56,7 @@ function CapabilityCard({ item, index, expanded, onToggle, onEnter, onLeave }: {
   return <article className="group border-b border-r border-border bg-background/35 transition-colors hover:bg-card focus-within:bg-card" onMouseEnter={onEnter} onMouseLeave={onLeave}>
     <Button type="button" variant="ghost" onClick={onToggle} onFocus={onEnter} aria-expanded={expanded} aria-controls={`capability-panel-${index}`} className="h-auto min-h-[250px] w-full items-stretch justify-start rounded-none p-7 text-left text-foreground hover:bg-transparent hover:text-foreground md:p-9">
       <span className="flex w-full flex-col whitespace-normal">
-        <span className="flex items-start justify-between"><span className="text-xs text-muted-foreground">{num}</span><span className="h-14 w-14 text-accent"><CapabilityIcon index={index}/></span></span>
+        <span className="flex items-start justify-between"><span className="text-xs text-muted-foreground">{num}</span><span className="h-20 w-20 text-accent md:h-24 md:w-24"><CapabilityIcon index={index}/></span></span>
         <span className="mt-12 flex items-end justify-between gap-6"><span className="max-w-sm font-display text-3xl font-normal leading-tight">{title}</span><ChevronDown className={`mb-1 h-5 w-5 shrink-0 transition-transform duration-300 ${expanded ? "rotate-180" : ""}`}/></span>
       </span>
     </Button>
@@ -110,7 +86,7 @@ function Index() {
           <div className="absolute inset-0 bg-primary/72" />
           <div className="relative mx-auto flex min-h-[calc(92vh-5rem)] max-w-[1440px] items-end px-5 py-14 md:px-10 md:py-20">
             <div className="reveal-up max-w-5xl text-primary-foreground">
-              <p className="mb-7 text-xs font-medium uppercase tracking-[0.2em] text-primary-foreground/70">Finance · Audit · Economics</p>
+              <p className="mb-7 text-xs font-medium uppercase tracking-[0.2em] text-primary-foreground/70">Finance · Governance · Economics</p>
               <h1 className="max-w-5xl font-display text-6xl leading-[0.94] md:text-8xl lg:text-[7.5rem]">Navigating Macro-Dynamics &amp; Strategic Governance.</h1>
               <p className="mt-8 max-w-2xl text-base leading-relaxed text-primary-foreground/75 md:text-lg">Timothy (Thang) Nghiem — Business Administration &amp; Applied Economics Graduate.</p>
               <div className="mt-9 flex flex-wrap gap-3">
@@ -127,17 +103,18 @@ function Index() {
             <div><p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">01 / About</p><h2 className="mt-6 font-display text-5xl leading-none md:text-7xl">The Intersection of Capital, Policy, and Governance</h2></div>
             <div className="lg:pt-12"><p className="max-w-3xl text-xl leading-relaxed text-muted-foreground md:text-2xl">I operate at the crossroads where macroeconomic realities meet geopolitical strategy. With a foundation in Business Administration, economics, and administrative politics, my focus centers on how policy shifts and market dynamics govern capital allocation and risk.</p></div>
           </div>
-          <div className="mt-20 grid gap-8 lg:grid-cols-[1.5fr_.7fr] lg:items-end"><WorldMap/><div className="pb-2"><p className="font-display text-4xl">7 countries</p><p className="mt-4 leading-relaxed text-muted-foreground">France, China, Denmark, Germany, UAE, Qatar — currently based in Finland.</p></div></div>
+          <div className="mt-20 grid gap-8 lg:grid-cols-[1.5fr_.7fr] lg:items-end"><figure className="glass-panel overflow-hidden"><img src={travelMapAsset.url} alt="World map highlighting Vietnam, China, France, Germany, Denmark, Finland, Qatar, and the UAE" width={1000} height={666} loading="lazy" className="h-auto w-full"/></figure><div className="pb-2"><p className="font-display text-4xl">8 countries</p><p className="mt-4 leading-relaxed text-muted-foreground">Born and raised in Vietnam, with experience across China, France, Denmark, Germany, UAE, and Qatar — currently based in Finland.</p></div></div>
         </section>
 
         <section id="academic" className="section-rule scroll-mt-20 bg-primary text-primary-foreground">
           <div className="mx-auto max-w-[1440px] px-5 py-24 md:px-10 md:py-32">
             <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end"><div><p className="text-xs uppercase tracking-[0.18em] text-primary-foreground/55">02 / Academic rigor</p><h2 className="mt-5 max-w-3xl font-display text-5xl leading-none md:text-7xl">Strategic vision, built on evidence.</h2></div><Button asChild variant="portfolioOutline" size="portfolio" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground hover:text-primary"><a href={transcriptUrl} target="_blank" rel="noreferrer">View official transcript <ArrowUpRight /></a></Button></div>
             <div className="mt-16 grid border border-primary-foreground/20 md:grid-cols-2">
-              <div className="p-8 md:border-r md:border-primary-foreground/20 md:p-12"><div className="font-display text-8xl md:text-9xl">190</div><p className="mt-4 text-sm uppercase tracking-[0.16em] text-primary-foreground/60">ECTS completed in 2 years</p><p className="mt-3 text-sm text-primary-foreground/60">Tampere University &amp; Aalto University</p></div>
+              <div className="p-8 md:border-r md:border-primary-foreground/20 md:p-12"><div className="font-display text-8xl md:text-9xl">190</div><p className="mt-4 text-sm uppercase tracking-[0.16em] text-primary-foreground/60">ECTS completed in 2 years</p><div className="mt-6 grid grid-cols-2 gap-4"><div><p className="text-sm text-primary-foreground/70">Tampere University</p><div className="mt-3 flex h-28 items-center justify-center bg-background p-4"><img src={tampereLogoAsset.url} alt="Tampere University logo" width={304} height={387} loading="lazy" className="h-20 w-auto object-contain"/></div></div><div><p className="text-sm text-primary-foreground/70">Aalto University</p><div className="mt-3 flex h-28 items-center justify-center bg-background p-4"><img src={aaltoLogoAsset.url} alt="Aalto University logo" width={768} height={768} loading="lazy" className="h-24 w-full object-contain"/></div></div></div></div>
               <div className="divide-y divide-primary-foreground/20"><div className="p-8 md:p-10"><p className="text-xs uppercase tracking-[0.15em] text-secondary">Mastering Large Engineering Projects</p><p className="mt-4 leading-relaxed text-primary-foreground/70">Investigating structural governance, capital expenditure auditing, and risk management frameworks in multi-billion euro infrastructure assets.</p></div><div className="p-8 md:p-10"><p className="text-xs uppercase tracking-[0.15em] text-secondary">Quantitative Exploration</p><p className="mt-4 leading-relaxed text-primary-foreground/70">Actively expanding practical capabilities in coding and machine learning for economic predictions and automated auditing.</p></div></div>
             </div>
             <p className="mt-10 max-w-4xl border-l border-accent pl-6 font-display text-2xl italic text-primary-foreground/80">While evaluating complex systems holistically, my core operational focus lies in Finance and Economics—where data, structure, and strategic leverage yield maximum impact.</p>
+            <a href={thesisUrl} target="_blank" rel="noreferrer" className="group mt-12 grid gap-6 border-t border-primary-foreground/20 pt-8 transition-colors hover:text-secondary md:grid-cols-[1fr_auto] md:items-end"><div><p className="text-xs uppercase tracking-[0.15em] text-secondary">Bachelor’s Thesis</p><h3 className="mt-3 font-display text-3xl md:text-4xl">Finance through the lens of large-project management</h3><p className="mt-4 max-w-3xl leading-relaxed text-primary-foreground/65">The thesis connects financial judgment with the realities of managing large projects: capital allocation, governance structures, risk exposure, and the long-term decisions that determine whether complex investments create durable value.</p></div><span className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em]">Read thesis <ArrowUpRight className="h-5 w-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"/></span></a>
           </div>
         </section>
 
