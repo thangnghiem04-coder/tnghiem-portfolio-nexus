@@ -77,8 +77,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Timothy Nghiem — Finance, Audit & Economics" },
-      { name: "description", content: "Portfolio of Timothy (Thang) Nghiem, focused on finance, audit, economics, governance, and quantitative analysis." },
+      { title: "Timothy Nghiem — Finance, Governance & Economics" },
+      { name: "description", content: "Portfolio of Timothy (Thang) Nghiem, focused on finance, governance, economics, and quantitative analysis." },
       { name: "author", content: "Timothy (Thang) Nghiem" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

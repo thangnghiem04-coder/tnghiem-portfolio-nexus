@@ -56,7 +56,7 @@ function CapabilityCard({ item, index, expanded, onToggle, onEnter, onLeave }: {
   return <article className="group border-b border-r border-border bg-background/35 transition-colors hover:bg-card focus-within:bg-card" onMouseEnter={onEnter} onMouseLeave={onLeave}>
     <Button type="button" variant="ghost" onClick={onToggle} onFocus={onEnter} aria-expanded={expanded} aria-controls={`capability-panel-${index}`} className="h-auto min-h-[250px] w-full items-stretch justify-start rounded-none p-7 text-left text-foreground hover:bg-transparent hover:text-foreground md:p-9">
       <span className="flex w-full flex-col whitespace-normal">
-        <span className="flex items-start justify-between"><span className="text-xs text-muted-foreground">{num}</span><span className="h-20 w-20 text-accent md:h-24 md:w-24"><CapabilityIcon index={index}/></span></span>
+        <span className="flex items-start justify-between"><span className="text-xs text-muted-foreground">{num}</span><span className="h-20 w-20 text-accent [&>svg]:h-full [&>svg]:w-full md:h-24 md:w-24"><CapabilityIcon index={index}/></span></span>
         <span className="mt-12 flex items-end justify-between gap-6"><span className="max-w-sm font-display text-3xl font-normal leading-tight">{title}</span><ChevronDown className={`mb-1 h-5 w-5 shrink-0 transition-transform duration-300 ${expanded ? "rotate-180" : ""}`}/></span>
       </span>
     </Button>
