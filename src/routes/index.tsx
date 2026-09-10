@@ -5,8 +5,7 @@ import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/timothy-portfolio-hero.jpg";
 import contactBanner from "@/assets/contact-financial-banner.jpg";
 import travelMapAsset from "@/assets/timothy-travel-map.png.asset.json";
-import aaltoLogoAsset from "@/assets/aalto-university-logo.png.asset.json";
-import tampereLogoAsset from "@/assets/tampere-university-logo.png.asset.json";
+
 
 const workUrl = "https://drive.google.com/drive/folders/1YH5NBk6iQbgFOnCuQ5Le84UC7RR0V1jy?usp=drive_link";
 const transcriptUrl = "https://drive.google.com/file/d/1vUTw9c2nO8ngR5mvj21gUYWJh39UAZvu/view?usp=drive_link";
